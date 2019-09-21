@@ -1,10 +1,6 @@
 from common.variables import *
 import json
 
-
-# Утилита приёма и декодирования сообщения
-# принимает байты выдаёт словарь, если приняточто-то другое отдаёт ошибку значения
-
 def get_message(client):
     encoded_response = client.recv(MAX_PACKAGE_LENGTH)
     if isinstance(encoded_response, bytes):
@@ -17,9 +13,6 @@ def get_message(client):
     else:
         raise ValueError
 
-
-# Утилита кодирования и отправки сообщения
-# принимает словарь и отправляет его
 def send_message(sock, message):
     if not isinstance(message , dict):
         raise TypeError

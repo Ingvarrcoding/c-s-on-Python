@@ -4,9 +4,6 @@ import json
 from common.variables import *
 from common.utils import *
 
-
-# Обработчик сообщений от клиентов, принимает словарь - сообщение от клинта, проверяет корректность, возвращает \
-#                                                                                       словарь-ответ для клиента
 def process_client_message(message):
     if ACTION in message and message[ACTION] == PRESENCE and TIME in message and USER in message and \
             message[USER][ACCOUNT_NAME] == 'Guest':
@@ -19,9 +16,6 @@ def process_client_message(message):
 
 
 def main():
-    # Загрузка параметров командной строки, если нет параметров, то задаём значения по умоланию.
-
-    # Сначала обрабатываем порт:
     try:
         if '-p' in sys.argv:
             listen_port = int(sys.argv[sys.argv.index('-p') + 1])
@@ -36,8 +30,6 @@ def main():
         print('В качастве порта может быть указано только число в диапазоне от 1024 до 65535.')
         exit(1)
 
-    # Затем загружаем какой адрес слушать
-
     try:
         if '-a' in sys.argv:
             listen_address = int(sys.argv[sys.argv.index('-a') + 1])
@@ -48,12 +40,8 @@ def main():
         print('После параметра \'a\'- необходимо указать адрес, который будет слушать сервер.')
         exit(1)
 
-    # Готовим сокет
-
     transport = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     transport.bind((listen_address, listen_port))
-
-    # Слушаем порт
 
     transport.listen(MAX_CONNECTIONS)
 
