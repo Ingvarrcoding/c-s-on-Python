@@ -5,8 +5,6 @@ import time
 from common.variables import *
 from common.utils import *
 
-
-# Функция генерирует запрос о присутствии клиента
 def create_presence(account_name='Guest'):
     out = {
         ACTION: PRESENCE,
@@ -17,8 +15,6 @@ def create_presence(account_name='Guest'):
     }
     return out
 
-
-# Функция разбирает ответ сервера
 def process_ans(message):
     if RESPONSE in message:
         if message[RESPONSE] == 200:
@@ -27,9 +23,7 @@ def process_ans(message):
             return f'400 : {message[ERROR]}'
     raise ValueError
 
-
 def main():
-    # Загружаем параметы коммандной строки
     try:
         server_address = sys.argv[1]
         server_port = int(sys.argv[2])
@@ -42,8 +36,6 @@ def main():
         print('В качастве порта может быть указано только число в диапазоне от 1024 до 65535.')
         exit(1)
 
-    # Инициализация сокета и обмен
-
     transport = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     transport.connect((server_address, server_port))
     message_to_server = create_presence()
@@ -53,7 +45,6 @@ def main():
         print(answer)
     except (ValueError, json.JSONDecodeError):
         print('Не удалось декодировать сообщение сервера.')
-
 
 if __name__ == '__main__':
     main()
